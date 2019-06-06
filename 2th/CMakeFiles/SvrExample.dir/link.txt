@@ -1,0 +1,1 @@
+/usr/bin/cc   -rdynamic CMakeFiles/SvrExample.dir/SvrExample.c.o  -o SvrExample  -L/home/oshare/work/2th -Wl,-rpath,/home/oshare/work/2th libExampleServerlib.a -lpthread -lgio-2.0 -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lrt -lglib-2.0 

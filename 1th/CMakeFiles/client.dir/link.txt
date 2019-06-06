@@ -1,0 +1,1 @@
+/usr/bin/cc   -rdynamic CMakeFiles/client.dir/gdbus_client.c.o CMakeFiles/client.dir/Building.c.o  -o client -lglib-2.0 

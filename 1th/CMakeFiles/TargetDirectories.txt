@@ -1,0 +1,4 @@
+/home/oshare/work/1th/CMakeFiles/edit_cache.dir
+/home/oshare/work/1th/CMakeFiles/rebuild_cache.dir
+/home/oshare/work/1th/CMakeFiles/server.dir
+/home/oshare/work/1th/CMakeFiles/client.dir

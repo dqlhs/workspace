@@ -1,0 +1,1 @@
+/usr/bin/cc   -rdynamic CMakeFiles/server.dir/gdbus_server.c.o CMakeFiles/server.dir/Building.c.o  -o server -lglib-2.0 

@@ -1,0 +1,6 @@
+/home/oshare/work/2th/CMakeFiles/rebuild_cache.dir
+/home/oshare/work/2th/CMakeFiles/edit_cache.dir
+/home/oshare/work/2th/CMakeFiles/TCltExample.dir
+/home/oshare/work/2th/CMakeFiles/SvrExample.dir
+/home/oshare/work/2th/CMakeFiles/ExampleClientlib.dir
+/home/oshare/work/2th/CMakeFiles/ExampleServerlib.dir

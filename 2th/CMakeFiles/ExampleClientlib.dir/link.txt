@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC   -shared -Wl,-soname,libExampleClientlib.so -o libExampleClientlib.so CMakeFiles/ExampleClientlib.dir/libClient.c.o CMakeFiles/ExampleClientlib.dir/Example-generated.c.o  -L/home/oshare/work/2th 

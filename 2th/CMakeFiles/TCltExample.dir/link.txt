@@ -1,0 +1,1 @@
+/usr/bin/cc   -rdynamic CMakeFiles/TCltExample.dir/CltExample.c.o  -o TCltExample  -L/home/oshare/work/2th -Wl,-rpath,/home/oshare/work/2th libExampleClientlib.so libExampleServerlib.a -lpthread -lgio-2.0 -lgobject-2.0 -lgmodule-2.0 -lgthread-2.0 -lrt -lglib-2.0 

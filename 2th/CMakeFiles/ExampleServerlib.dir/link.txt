@@ -1,0 +1,2 @@
+/usr/bin/ar qc libExampleServerlib.a  CMakeFiles/ExampleServerlib.dir/libServer.c.o CMakeFiles/ExampleServerlib.dir/Example-generated.c.o
+/usr/bin/ranlib libExampleServerlib.a

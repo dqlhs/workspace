@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+  <interface name="com.qiaotsh.Building.Test">
+    <method name="SetVersion">
+      <arg name="version" type="s" direction="in"/>
+      <arg name="reply" type="s" direction="out"/>
+    </method>
+    <signal name="TestStatus">
+      <arg name="status" type="i"/>
+    </signal>
+  </interface>
+</node>`
