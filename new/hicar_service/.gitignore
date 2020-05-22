@@ -1,0 +1,16 @@
+build-x86/
+x86/
+build/
+
+*~
+*.user.*
+*.user
+*.o
+*.bin
+*.s
+*.autosave.*
+
+!*.bin
+src/virtual_dev/audio/include/config.h
+
+hislog/

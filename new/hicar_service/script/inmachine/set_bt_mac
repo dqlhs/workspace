@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function result_check {
+    if [ "$?" != "0" ]; then
+        exit;
+    fi
+}
+
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
+print_line() {
+    echo ""
+}
+
+print_green() {
+    print_line
+    echo "${green}-> $1 ${reset}"
+}
+
+print_red() {
+    print_line
+    echo "${red}-> $1 ${reset}"
+}
+
+
+if [ -z "$1"  ]; then
+    print_red "example : $0 xx"
+    exit -1;
+fi
+
+sed -i "s/81/$1/g" /etc/bluetooth/TL.INI

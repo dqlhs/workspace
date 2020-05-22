@@ -1,0 +1,3 @@
+#pragma once
+
+#define OXYGEN_ENV_LOAD_PLUGINS "OXY_LOAD_PLUGINS"

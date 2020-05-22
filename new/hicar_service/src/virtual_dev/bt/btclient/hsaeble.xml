@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<interface name="com.hsaeyz.bluetooth.hsaeble">
+        <property name="ibroadcast" type="b" access="readwrite" />		  
+ 	<method name="startBleAdvertise">
+                <arg name="data" type="ay" direction="in" >
+       	        <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+                </arg>
+	        <arg name="datalen" type="i" direction="in" />		
+	</method>
+       <method name="stopBleAdvertise">	
+	</method>
+
+</interface>
+</node>
+

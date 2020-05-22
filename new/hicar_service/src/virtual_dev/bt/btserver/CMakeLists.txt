@@ -1,0 +1,78 @@
+#specify the minimum version of cmake
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8 FATAL_ERROR)
+SET( CMAKE_VERBOSE_MAKEFILE on )
+#set PROJECT_NAME
+project(bluetooth)
+# to automoc remove the need to wrap by hand
+# set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+#### Qt5
+SET(CMAKE_PREFIX_PATH ${SYSROOT_DIR}/usr/lib/cmake)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++0x ")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -D__GXX_EXPERIMENTAL_CXX0X__ ")
+#add include path
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include/server)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/src-gen)
+
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/dbus-1.0/)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/lib/dbus-1.0/include)
+
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/libxml2)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/glib-2.0)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/gio-unix-2.0)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/gstreamer-1.0)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/lib/gstreamer-1.0/include)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/lib/glib-2.0/include)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/c++/4.9.2)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/c++/4.9.2/include)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/c++/4.9.2/backward)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/c++/4.9.2/arm-linux-gnueabihf)
+INCLUDE_DIRECTORIES(${SYSROOT_DIR}/usr/include/jsoncpp)
+ADD_DEFINITIONS(-DUSE_DOWNLOADCALLLOG)
+#indicate the library path for the compiler
+#uncomment & modify this line on the basis of your project.
+LINK_DIRECTORIES("${SYSROOT_DIR}/usr/lib")
+#add by qianzhong
+LINK_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}/lib")
+
+#enumrate the source file under src folder
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src/server SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen/Device SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen/HFP SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen/Media SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen/PhoneBook SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen/Set SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen/Spp SRC_SERVER_LIST)
+AUX_SOURCE_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/src-gen/ble SRC_SERVER_LIST)
+#add executable target
+ADD_EXECUTABLE(HsaeBtServer ${SRC_SERVER_LIST})
+
+#add static library target
+#ADD_LIBRARY(${PROJECT_NAME} STATIC ${SRC_LIST})
+
+#link the libhello.so which is under "/usr/lib" against the
+#target created by ADD_XXX function.
+TARGET_LINK_LIBRARIES(HsaeBtServer pthread rt dbus-1 asound glib-2.0 gobject-2.0 gio-2.0 jsoncpp iap bluelink sqlite3)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/lib/libbluelink.so DESTINATION "/usr/lib")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/lib/libiap.so DESTINATION "/usr/lib")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/lib/libbrlinkd.so DESTINATION "/usr/lib")
+INSTALL(TARGETS HsaeBtServer RUNTIME DESTINATION "/usr/bin/bluetooth")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/hsaebt.conf DESTINATION "/etc/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/iap2_config.xml DESTINATION "/etc/")
+#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/bt_firmware_set DESTINATION "/sbin/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/bt_firmware_set DESTINATION "/sbin/"
+        PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ GROUP_EXECUTE GROUP_READ)
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/autocon_flg.txt DESTINATION "/usr/bin/bluetooth/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/DefaultRingTone.wav DESTINATION "/usr/bin/bluetooth/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/UpdateBTAddress DESTINATION "/usr/bin/bluetooth/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/rampatch_tlv_tf_1.1.tlv DESTINATION "/etc/bluetooth/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/TL.INI DESTINATION "/etc/bluetooth/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/nvm_tlv_tf_1.1.bin DESTINATION "/etc/bluetooth/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/systemd/hsaebtserver.service DESTINATION "/etc/systemd/system/")
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/conf/com.hsaeyz.bluetooth.conf DESTINATION "/etc/dbus-1/system.d")
+

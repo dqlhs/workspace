@@ -1,0 +1,23 @@
+.
+├── CMakeLists.txt           // root cmake
+├── CMakeLists.txt.user
+├── config                   // 工程的配置文件，包含systemd配置文件，启动运行配置文件。需要按照根目录创建文件夹，安装时会将整个config的内容拷贝到【/】目录中
+├── core                     // 公司内部通用的库文件，统一了日志打印，异常打印，等功能
+│   ├── CMakeLists.txt
+│   └── oxygen
+│       └── common
+├── README                   // 当前工程信息
+├── script                   // 开发中需要使用的脚本
+│   └── deploy.sh            // 工程部署脚本，基于SCP
+├── src                      // 工程文件
+│   ├── CMakeLists.txt
+│   ├── main.cpp
+│   └── virtual_dev          // 华为南向功能适配
+│       ├── audio
+│       ├── ble
+│       ├── camera
+│       ├── video
+│       └── wifi
+└── thrid_party              // 三方库，非航盛自己的库文件
+    ├── hicar_sdk
+    └── rootfs

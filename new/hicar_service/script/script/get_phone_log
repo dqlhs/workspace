@@ -1,0 +1,13 @@
+#!/bin/bash
+
+mkdir -p log/ 2>/dev/null
+
+# get system log
+adb shell 'cd /data/log/android_logs/ && tar -zcvf phone_sys_log.tar.gz *'
+adb pull '/data/log/android_logs/phone_sys_log.tar.gz' log/
+adb shell 'cd /data/log/android_logs/ && rm -rf ../android_logs/phone_sys_log.tar.gz'
+
+# get bt snoop
+adb shell 'cd /data/log/bt/ && tar -zcvf phone_bt_log.tar.gz *'
+adb pull '/data/log/bt/phone_bt_log.tar.gz' log/
+adb shell 'cd /data/log/bt/ && rm -rf ../bt/phone_bt_log.tar.gz'

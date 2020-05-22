@@ -1,0 +1,10 @@
+[Unit]
+Description=Service to provide ip setting function
+
+[Service]
+ExecStart=/Application/ipconfigd.service/ipconfigd -d eth0 -i 192.168.5.12
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

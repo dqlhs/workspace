@@ -1,0 +1,11 @@
+[Unit]
+Description=hsae bt service
+[Service]
+EnvironmentFile=-/etc/hsaebt.conf
+ExecStart=/usr/bin/bluetooth/HsaeBtServer
+#StandardOutput=tty
+Restart=on-failure
+[Install]
+WantedBy=basic.target
+
+

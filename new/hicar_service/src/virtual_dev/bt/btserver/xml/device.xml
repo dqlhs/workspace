@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<interface name="com.hsaeyz.bluetooth.device">
+ <!-- add by lhm 本机mac地址 -->
+	<property name="LocalAddress" type="s" access="readwrite"/>
+ <!-- add by lhm 本机名称  -->
+	<property name="LocalName" type="s" access="readwrite"/>
+ <!-- add by lhm 本机名称  -->
+	<property name="PowerState" type="b" access="readwrite"/>
+
+	<property name="ScanState" type="b" access="readwrite"/>
+
+	<property name="PairState" type="b" access="readwrite"/>
+	
+	<property name="BtServiceState" type="b" access="readwrite"/>
+	
+	<property name="AutoConnectState" type="b" access="readwrite"/>
+	
+	<method name="startScan">
+	</method>
+
+	<method name="stopScan">
+	</method>
+
+	<method name="accpectPair">
+	</method>
+
+	<method name="refusePair">
+	</method>
+
+	<method name="deletePairDevice">
+		<arg name="btAddress" type="s" direction="in" />
+	</method>
+
+        <method name="clearPairDevice">
+	</method>
+	<method name="connectDevice">
+		<arg name="btAddress" type="s" direction="in" />
+		<arg name="profileId" type="i" direction="in" />
+	</method>
+
+	<method name="disConnectDevice">
+		<arg name="btAddress" type="s" direction="in" />
+		<arg name="profileId" type="i" direction="in" />
+	</method>
+
+	<method name="disConnectCurrentDevice">
+        </method>
+
+	<method name="getPairedList">
+	</method>
+
+	<method name="getLocalProperties">
+	</method>
+
+	<method name="getCurrentStates">
+	</method>
+	
+	<signal name="pairListChanged">
+		<arg name="pairList" type="s" />
+	</signal>
+
+        <signal name="requestpair">
+	       <arg name="phonename" type="s" />
+               <arg name="phoneaddr" type="s" />
+	</signal>
+
+        <signal name="disonnectreseason">
+	       <arg name="mac" type="s" />
+               <arg name="reseason" type="i" />
+	</signal>
+
+	<signal name="currentStateChanged">
+		<arg name="btAddress" type="s" />
+		<arg name="hfpConnnectState" type="i" />
+		<arg name="pbapConnnectState" type="b" />
+		<arg name="avrcpConnnectState" type="b" />
+		<arg name="a2cpConnnectState" type="b" />
+		<arg name="callState" type="i" />
+		<arg name="phoneNumber" type="s" />
+		<arg name="audioState" type="b" />
+		<arg name="playState" type="i" />
+		<arg name="songLength" type="s" />
+        <arg name="playPosition" type="s" />
+	</signal>
+	
+	<signal name="connectStateChanged">
+        <arg name="address" type="s" />
+        <arg name ="profileId" type="i"/>
+        <arg name ="connectState" type="i"/>
+    </signal>
+    
+    <signal name="localPropertyChanged">
+        <arg name="address" type="s" />
+        <arg name ="localName" type="s"/>
+        <arg name ="powerState" type="b"/>
+    </signal>
+     <!-- add by qianzhong 2017-6-19 -->
+     <signal name="searchDeviceChanged">
+        <arg name="address" type="s" />
+        <arg name ="localName" type="s"/>
+    </signal>
+	<signal name="batteryChanged">
+		<arg name="batteryState" type="i" />
+	</signal>
+</interface>
+</node>
+

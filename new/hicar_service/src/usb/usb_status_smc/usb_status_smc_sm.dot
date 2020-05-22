@@ -1,0 +1,94 @@
+digraph usb_status_smc {
+
+    node
+        [shape=Mrecord width=1.5];
+
+    subgraph cluster_USBStatusMap {
+
+        label="USBStatusMap";
+
+        //
+        // States (Nodes)
+        //
+
+        "USBStatusMap::WaitUsbPlugin"
+            [label="{WaitUsbPlugin|Entry/\l&nbsp;&nbsp;&nbsp;set_current_status(usb_sm_status::wait_huawei_usb_plugin);\lExit/\l&nbsp;&nbsp;&nbsp;set_previous_status(ctxt.current_status());\l|mdns_activation_failed()/\lDefault()/\ltimeout(_status: usb_sm_status)/\l}"];
+
+        "USBStatusMap::WaitUsbNcmSwitch"
+            [label="{WaitUsbNcmSwitch|Entry/\l&nbsp;&nbsp;&nbsp;set_current_status(usb_sm_status::wait_usb_ncm_switch);\lExit/\l&nbsp;&nbsp;&nbsp;set_previous_status(ctxt.current_status());\l|unplug()/\lmdns_activation_failed()/\lDefault()/\ltimeout(_status: usb_sm_status)/\l}"];
+
+        "USBStatusMap::WaitIfaceIpAddrSetting"
+            [label="{WaitIfaceIpAddrSetting|Entry/\l&nbsp;&nbsp;&nbsp;set_current_status(usb_sm_status::wait_ip_addr_setting);\lExit/\l&nbsp;&nbsp;&nbsp;set_previous_status(ctxt.current_status());\l|mdns_activation_failed()/\lDefault()/\ltimeout(_status: usb_sm_status)/\l}"];
+
+        "USBStatusMap::WaitMdnsStatus"
+            [label="{WaitMdnsStatus|Entry/\l&nbsp;&nbsp;&nbsp;set_current_status(usb_sm_status::wait_mdns_start);\lExit/\l&nbsp;&nbsp;&nbsp;set_previous_status(ctxt.current_status());\l|Default()/\ltimeout(_status: usb_sm_status)/\l}"];
+
+        "USBStatusMap::DiscoverFinish"
+            [label="{DiscoverFinish|Entry/\l&nbsp;&nbsp;&nbsp;set_current_status(usb_sm_status::usb_discover_finish);\lExit/\l&nbsp;&nbsp;&nbsp;set_previous_status(ctxt.current_status());\l|mdns_activation_failed()/\lDefault()/\ltimeout(_status: usb_sm_status)/\l}"];
+
+        "USBStatusMap::ProcessError"
+            [label="{ProcessError|Entry/\l&nbsp;&nbsp;&nbsp;set_current_status(usb_sm_status::process_error);\lExit/\l&nbsp;&nbsp;&nbsp;set_previous_status(ctxt.current_status());\l|mdns_activation_failed()/\lDefault()/\ltimeout(_status: usb_sm_status)/\l}"];
+
+        "%start"
+            [label="" shape=circle style=filled fillcolor=black width=0.25];
+
+    }
+
+    //
+    // Transitions (Edges)
+    //
+
+    "USBStatusMap::WaitUsbPlugin" -> "USBStatusMap::WaitUsbNcmSwitch"
+        [label="active_ncm_switch_successful()/\ladd_status_check(\"ncm_dev_check\", std::bind(&hicar_usb_manager::ncm_dev_check, std::ref(ctxt)));\l"];
+
+    "USBStatusMap::WaitUsbPlugin" -> "USBStatusMap::ProcessError"
+        [label="active_num_swich_failure()/\l"];
+
+    "USBStatusMap::WaitUsbPlugin" -> "USBStatusMap::WaitUsbPlugin"
+        [label="unplug()/\lclear_status_check();\l"];
+
+    "USBStatusMap::WaitUsbPlugin" -> "USBStatusMap::ProcessError"
+        [label="timeout(_status: usb_sm_status)\l\[ctxt.current_status() == _status\]/\l"];
+
+    "USBStatusMap::WaitUsbNcmSwitch" -> "USBStatusMap::WaitIfaceIpAddrSetting"
+        [label="ncm_dev_up()/\lset_iface_ip();\lpost_event(std::bind(&hicar_usb_manager::iface_ip_check, std::ref(ctxt)));\ladd_status_check(\"iface_ip_check\", std::bind(&hicar_usb_manager::iface_ip_check, std::ref(ctxt)));\lnotify_usb_plug_status(usb_plug_status::plugin);\l"];
+
+    "USBStatusMap::WaitUsbNcmSwitch" -> "USBStatusMap::ProcessError"
+        [label="timeout(_status: usb_sm_status)\l\[ctxt.current_status() == _status\]/\l"];
+
+    "USBStatusMap::WaitIfaceIpAddrSetting" -> "USBStatusMap::WaitMdnsStatus"
+        [label="iface_ip_is_ok()/\lstart_mdns_service();\l"];
+
+    "USBStatusMap::WaitIfaceIpAddrSetting" -> "USBStatusMap::WaitUsbPlugin"
+        [label="unplug()/\lclear_status_check();\l"];
+
+    "USBStatusMap::WaitIfaceIpAddrSetting" -> "USBStatusMap::ProcessError"
+        [label="timeout(_status: usb_sm_status)\l\[ctxt.current_status() == _status\]/\l"];
+
+    "USBStatusMap::WaitMdnsStatus" -> "USBStatusMap::DiscoverFinish"
+        [label="mdns_already_activated()/\l"];
+
+    "USBStatusMap::WaitMdnsStatus" -> "USBStatusMap::ProcessError"
+        [label="mdns_activation_failed()/\lnotify_usb_plug_status(usb_plug_status::unplug);\l"];
+
+    "USBStatusMap::WaitMdnsStatus" -> "USBStatusMap::WaitUsbPlugin"
+        [label="unplug()/\lclear_status_check();\l"];
+
+    "USBStatusMap::WaitMdnsStatus" -> "USBStatusMap::ProcessError"
+        [label="timeout(_status: usb_sm_status)\l\[ctxt.current_status() == _status\]/\l"];
+
+    "USBStatusMap::DiscoverFinish" -> "USBStatusMap::WaitUsbPlugin"
+        [label="unplug()/\lclear_status_check();\lnotify_usb_plug_status(usb_plug_status::unplug);\l"];
+
+    "USBStatusMap::DiscoverFinish" -> "USBStatusMap::ProcessError"
+        [label="timeout(_status: usb_sm_status)\l\[ctxt.current_status() == _status\]/\l"];
+
+    "USBStatusMap::ProcessError" -> "USBStatusMap::WaitUsbPlugin"
+        [label="unplug()/\lclear_status_check();\l"];
+
+    "USBStatusMap::ProcessError" -> "USBStatusMap::ProcessError"
+        [label="timeout(_status: usb_sm_status)\l\[ctxt.current_status() == _status\]/\l"];
+
+    "%start" -> "USBStatusMap::WaitUsbPlugin"
+
+}

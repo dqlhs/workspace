@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+	<interface name="com.hsaeyz.bluetooth.hfp">
+
+		<property name="PrivateState" type="b" access="readwrite" />
+        <!--	<property name="hsaeasrState" type="b" access="readwrite" />-->
+
+        <!--	<signal name="hsaeasrStateChanged">
+			<arg name="addr" type="s" />
+                        <arg name="state" type="b" />
+                </signal>-->
+
+		<signal name="CallNumberChanged">
+                        <arg name="name" type="s" />
+			<arg name="phoneNumber" type="s" />
+                        <arg name="index" type="i" />
+		</signal>
+		<signal name="CallStateChanged">
+			<arg name="callState" type="i" />
+                        <arg name="index" type="i" />
+		</signal>
+		<signal name="PrivateStateChanged">
+			<arg name="privateState" type="b" />
+		</signal>
+
+                <signal name="Havering">
+			<arg name="state" type="b" />
+		</signal>
+                
+
+		<method name="answerCall">
+		</method>
+
+		<method name="rejectCall">
+		</method>
+
+		<method name="terminateCall">
+		</method>
+
+		<method name="holdCall">
+			<arg name="action" type="i" direction="in" />
+		</method>
+
+		<method name="sendDTMF">
+			<arg name="dtmf" type="s" direction="in" />
+		</method>
+
+		<method name="dailCall">
+			<arg name="number" type="s" direction="in" />
+		</method>
+
+		<method name="audioTransfer">
+			<arg name="iActive" type="b" direction="in" />
+		</method>
+
+                <method name="MuteMic">
+			<arg name="micstate" type="b" direction="in" />
+		</method>
+		<method name="setCallAutoAction">
+			<arg name="action" type="i" direction="in" />
+		</method>
+
+		<method name="playRingTone">
+		</method>
+
+		<method name="stopRingTone">
+		</method>
+
+ 
+
+	</interface>
+</node>

@@ -1,0 +1,14 @@
+gdbus-codegen --interface-prefix=com.hsaeyz.sal --generate-c-code=WifiService WifiService.xml
+
+gcc -c wpa_ctrl.c -I. -I./utils -D CONFIG_CTRL_IFACE -D CONFIG_CTRL_IFACE_UNIX
+
+gcc -Wall -O2 -c WifiService.c -I. `pkg-config --cflags glib-2.0 gio-2.0 gio-unix-2.0`
+
+gcc -Wall -O2 -o client client.c WifiService.o -I. `pkg-config --libs --cflags glib-2.0 gio-2.0 gio-unix-2.0`
+
+g++ -Wall -Wno-unused-result -O2 -g -std=c++11 -o WifiService WifiServiceImpl.cc WifiMonitor.cc WifiNative.cc WifiService.o wpa_ctrl.c -I. `pkg-config --libs --cflags glib-2.0 gio-2.0 gio-unix-2.0 glibmm-2.4 giomm-2.4`
+
+
+gcc -Wall -O2 -o wpa_cli wpa_cli.c wpa_ctrl.o ./utils/os_unix.o ./utils/eloop.o ./utils/edit.o ./utils/wpa_debug.o ./utils/common.o -I./utils -D CONFIG_CTRL_IFACE -D CONFIG_CTRL_IFACE_UNIX
+
+g++ -Wall -Wno-unused-result -O2 -g -std=c++11 -o WifiService WifiServiceImpl.cc WifiMonitor.cc WifiNative.cc WifiService.o wpa_ctrl.o utils/eloop.o -I. `pkg-config --libs --cflags glib-2.0 gio-2.0 gio-unix-2.0 glibmm-2.4 giomm-2.4` -L./utils -lutils -D CONFIG_CTRL_IFACE -D CONFIG_CTRL_IFACE_UNIX

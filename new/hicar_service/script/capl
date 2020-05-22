@@ -1,0 +1,68 @@
+#!/bin/bash
+
+mkdir -p hislog/  2>/dev/null
+mkdir -p log/     2>/dev/null
+
+function result_check {
+    if [ "$?" != "0" ]; then
+        exit;
+    fi
+}
+
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
+print_line() {
+    echo ""
+}
+
+print_green() {
+    print_line
+    echo "${green}-> $1 ${reset}"
+}
+
+print_red() {
+    print_line
+    echo "${red}-> $1 ${reset}"
+}
+
+work_path=$(dirname $(realpath $0))
+
+phone_id=$1
+
+if [ -z ${work_path} ];
+then
+	print_red "!!!work_path is empty"
+	exit -1
+fi
+
+script_dir=${work_path}/script
+
+if [ "$1" == "clear" ];
+then
+	/bin/bash ${script_dir}/start_debug $1
+fi
+
+# function int_trap() {
+# 	echo "ctrl-c"
+# }
+
+# trap 'int_trap' INT
+
+print_green "get vehicle log"
+/bin/bash ${script_dir}/get_vehicle_log '192.168.5.12'
+
+print_green "get phone log"
+/bin/bash ${script_dir}/get_phone_log
+
+filename="hicarlog.$(date  +%Y.%m%d.%H%M%S).tar.gz"
+
+print_green "package log"
+pushd $(pwd)
+cd log/ && tar -zcvf ../hislog/${filename} *
+popd
+
+rm -rf log/
+
+print_green "!!! file name is [${filename}]"

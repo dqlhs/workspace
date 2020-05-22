@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<interface name="com.hsaeyz.bluetooth.media">
+	
+	<property name="MusicMuteState" type="b" access="readwrite"/>
+	<property name="Shufflemode" type="i" access="readwrite"/>
+	<property name="Reaptemode" type="i" access="readwrite"/>
+	<signal name="PlayAttributesChanged">
+		<arg name="title" type="s" />
+		<arg name="artist" type="s" />
+		<arg name="album" type="s" />
+		<arg name="genre" type="s" />
+		<arg name="trackNumber" type="i" />
+	</signal>
+	
+	<signal name="PlayStatusChanged">
+		<arg name="playState" type="i" />
+		<arg name="songLength" type="s" />
+		<arg name="playPosition" type="s" />
+	</signal>
+	
+	<signal name="streamStatusChanged">
+		<arg name="streamStatus" type="b" />
+	</signal>
+        <signal name="capabilityChanged">
+		<arg name="ncount" type="i" />
+                <arg name="eventname" type="ay" />
+	</signal>
+
+        <signal name="playermodesChanged">
+		<arg name="shuffle" type="i" />
+                <arg name="repeate" type="i" />
+	</signal>
+	<method name="nextSong">
+	</method>
+	
+	<method name="pauseMusic">
+	</method>
+	
+	<method name="playMusic">
+	</method>
+	
+	<method name="lastSong">
+	</method>
+	
+	<method name="muteMusic">
+             <arg name="state" type="b" direction="in" />
+	</method>
+
+        <method name="fastForwardstart">
+	</method>
+        <method name="fastForwardstop">
+        </method>
+        <method name="rewindstart">
+	</method>
+        <method name="rewindstop">
+        </method>
+        <method name="setplayer">
+                <arg name="nAttrID" type="i" direction="in" />
+		<arg name="value" type="i" direction="in" />
+	</method>
+
+</interface>
+</node>
+

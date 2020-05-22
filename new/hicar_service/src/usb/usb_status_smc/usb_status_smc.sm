@@ -1,0 +1,133 @@
+// -*- tab-width: 4; -*-
+
+%{
+// hicar usb status
+//
+
+%}
+
+%package hsae
+%start   USBStatusMap::WaitUsbPlugin
+%class   hicar_usb_manager
+%header  hicar_usb_manager.h
+
+%map USBStatusMap
+%%
+WaitUsbPlugin
+Entry { set_current_status (usb_sm_status::wait_huawei_usb_plugin); }
+Exit  { set_previous_status(ctxt.current_status()); }
+{
+    active_ncm_switch_successful
+    WaitUsbNcmSwitch
+    {
+        add_status_check("ncm_dev_check", std::bind(&hicar_usb_manager::ncm_dev_check, std::ref(ctxt)));
+    }
+
+    active_num_swich_failure
+    ProcessError
+    {
+
+    }
+}
+
+WaitUsbNcmSwitch
+Entry { set_current_status (usb_sm_status::wait_usb_ncm_switch); }
+Exit  { set_previous_status(ctxt.current_status()); }
+{
+    ncm_dev_up
+    WaitIfaceIpAddrSetting
+    {
+        set_iface_ip();
+        post_event(std::bind(&hicar_usb_manager::iface_ip_check, std::ref(ctxt)));
+        add_status_check("iface_ip_check", std::bind(&hicar_usb_manager::iface_ip_check, std::ref(ctxt)));
+        notify_usb_plug_status(usb_plug_status::plugin);
+    }
+
+    unplug
+    nil
+    {
+
+    }
+}
+
+WaitIfaceIpAddrSetting
+Entry { set_current_status (usb_sm_status::wait_ip_addr_setting); }
+Exit  { set_previous_status(ctxt.current_status()); }
+{
+    iface_ip_is_ok
+    WaitMdnsStatus
+    {
+        start_mdns_service();
+    }
+}
+
+WaitMdnsStatus
+Entry { set_current_status (usb_sm_status::wait_mdns_start); }
+Exit  { set_previous_status(ctxt.current_status()); }
+{
+    mdns_already_activated
+    DiscoverFinish
+    {
+
+    }
+
+    mdns_activation_failed
+    ProcessError
+    {
+        notify_usb_plug_status(usb_plug_status::unplug);
+    }
+}
+
+DiscoverFinish
+Entry { set_current_status (usb_sm_status::usb_discover_finish); }
+Exit  { set_previous_status(ctxt.current_status()); }
+{
+    unplug
+    WaitUsbPlugin
+    {
+        clear_status_check();
+        notify_usb_plug_status(usb_plug_status::unplug);
+    }
+}
+
+ProcessError
+Entry { set_current_status (usb_sm_status::process_error); }
+Exit  { set_previous_status(ctxt.current_status()); }
+{
+
+}
+
+Default
+{
+    unplug
+    WaitUsbPlugin
+    {
+        clear_status_check();
+    }
+
+    mdns_activation_failed
+    nil
+    {
+
+    }
+
+    Default
+    nil
+    {
+
+    }
+
+    timeout(_status : usb_sm_status)
+    [ctxt.current_status() == _status]
+    ProcessError
+    {
+
+    }
+
+    timeout(_status : usb_sm_status)
+    nil
+    {
+        // ERROR("current status : %d != timeout status : %d", (int)ctxt.current_status, (int)_status);
+    }
+}
+%%

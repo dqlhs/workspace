@@ -1,0 +1,10 @@
+include/server
+src-gen/Device
+src-gen/HFP
+src-gen/Media
+src-gen/PhoneBook
+src-gen/Set
+src-gen/Spp
+include
+src/server
+src-gen/ble

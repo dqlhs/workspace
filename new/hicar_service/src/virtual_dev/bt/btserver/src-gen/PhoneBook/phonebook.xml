@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<interface name="com.hsaeyz.bluetooth.phoneBook">
+	
+	<signal name="PbapDownLoadState">
+		<arg name="pbapDownLoadState" type="i" />
+	</signal>
+	
+	<signal name="PhoneBookChanged">
+		<arg name="contactlist" type="s" />
+	</signal>
+
+       <signal name="newCalllogChanged">
+	      <arg name="name" type="s" />
+              <arg name="number" type="s" />
+              <arg name="type" type="s" />
+              <arg name="datatime" type="s" />
+              <arg name="talktime" type="s" />
+	</signal>
+
+	<signal name="CallLogChanged">
+        <arg name="callLogList" type="s" />
+    </signal>
+	
+	<method name="downLoadPhoneBook">
+		<arg name="location" type="i" direction="in" />
+	</method>
+	
+	<method name="downLoadCallLog">
+		<arg name="type" type="i" direction="in" />
+	</method>
+	
+	<method name="CancelDownLoadPhoneBook">
+	</method>
+	
+	<method name="searchcontact">
+                <arg name="addr" type="s" direction="in" />
+		<arg name="sql" type="s" direction="in" />
+                <arg name="type" type="i" direction="in" />
+        </method>
+        
+       <method name="deletecontact">
+                <arg name="addr" type="s" direction="in" />
+                <arg name="name" type="s" direction="in" /> 
+		<arg name="num" type="s" direction="in" /> 
+       </method>         
+       
+        <method name="clearcontacts">
+                <arg name="addr" type="s" direction="in" />
+	</method>
+
+        <method name="savecontacts">
+                <arg name="addr" type="s" direction="in" />
+                <arg name="result" type="b" direction="out" />
+	</method>
+
+        <method name="getcontacts">
+                <arg name="addr" type="s" direction="in" />
+                <arg name="dataexits" type="b" direction="out" />
+	</method>
+        
+        <method name="syncdata">
+		<arg name="addr" type="s" direction="in" />
+                <arg name="type" type="i" direction="in" />
+	</method>
+        <method name="deletecalllog">
+                <arg name="addr" type="s" direction="in" />
+                <arg name="datatime" type="s" direction="in" /> 
+       </method>         
+       
+        <method name="clearcalllogs">
+                <arg name="addr" type="s" direction="in" />
+	</method>
+
+</interface>
+</node>
+

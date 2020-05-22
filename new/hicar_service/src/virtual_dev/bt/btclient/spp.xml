@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<interface name="com.hsaeyz.bluetooth.spp">
+        <property name="channelstate" type="b" access="readwrite" />		  
+        <signal name="channelChanged">
+		<arg name="state" type="b" />
+	</signal>
+	<signal name="channeldata">
+                <arg name="data" type="ay"  >
+                 <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+                </arg>-->
+	        <arg name="datalen" type="i" />
+               
+	</signal>
+
+	<method name="senddata">
+                <arg name="data" type="ay" direction="in" >
+       	        <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+                </arg>
+	        <arg name="datalen" type="i" direction="in" />		
+	</method>
+         
+         <method name="setparames">
+                <arg name="data" type="ay" direction="in" >
+       	        <annotation name="org.gtk.GDBus.C.ForceGVariant" value="true"/>
+                </arg>
+	        <arg name="datalen" type="i" direction="in" />		
+	</method>
+</interface>
+</node>
+

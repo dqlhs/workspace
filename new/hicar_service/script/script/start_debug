@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# clear phone and vehicle log info
+phone_id="$1"
+
+adb shell "rm /data/log/android_logs/*; rm /data/log/bt/*"

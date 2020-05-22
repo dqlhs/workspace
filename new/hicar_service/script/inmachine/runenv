@@ -1,0 +1,10 @@
+export QT_QPA_EGLFS_FORCEVSYNC=1
+export XDG_RUNTIME_DIR=/tmp
+export QT_QPA_PLATFORM=eglfs
+export LANG=en_US.UTF-8
+export FB_MULTI_BUFFER=3
+export QT_LOGGING_RULES="svlServer.*.debug=false;"
+export LD_LIBRARY_PATH=/usr/lib/aoshuo
+export QT_IM_MODULE=qtvecreenvk
+export VECREEN_PINYIN_DICT=/usr/bin/app
+export SVL_AUDIO_TBT_DEVICE=card1_dm

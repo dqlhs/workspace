@@ -1,0 +1,4 @@
+#cmakedefine ENABLE_AUDIO_CAPTURE @ENABLE_AUDIO_CAPTURE@
+#cmakedefine IN_PCM_PATH "@IN_PCM_PATH@"
+#cmakedefine OUT_PCM_PATH "@OUT_PCM_PATH@"
+#define HAVE_TYPEOF 1

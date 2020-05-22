@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <interface name="com.hsaeyz.sal.WifiClient">
+    <method name="addsta">
+      <arg name="config" type="(s)" direction="in" />
+    </method>
+    <signal name="hostapStatChange">
+      <arg name="currentState" type="(is)" direction="out" />
+    </signal>
+  </interface>
+</node>

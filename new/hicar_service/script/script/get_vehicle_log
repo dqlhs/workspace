@@ -1,0 +1,67 @@
+#!/bin/bash
+
+mkdir -p log/ 2>/dev/null
+
+function result_check {
+    if [ "$?" != "0" ]; then
+        exit;
+    fi
+}
+
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
+print_line() {
+    echo ""
+}
+
+print_green() {
+    print_line
+    echo "${green}-> $1 ${reset}"
+}
+
+print_red() {
+    print_line
+    echo "${red}-> $1 ${reset}"
+}
+
+function valid_ip()
+{
+    local  ip=$1
+    local  stat=1
+
+    if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        OIFS=$IFS
+        IFS='.'
+        ip=($ip)
+        IFS=$OIFS
+        [[ ${ip[0]} -le 255 && ${ip[1]} -le 255 \
+            && ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]
+        stat=$?
+    fi
+    return $stat
+}
+
+remote_ip=$1
+print_green ${remote_ip}
+
+if ! valid_ip ${remote_ip}
+then
+    print_red "!!!ip addr is invalid"
+    exit -1;
+fi
+
+function int_trap() {
+    echo "ctrl-c"
+}
+
+trap 'int_trap' INT
+
+time_1=$(date "+%Y-%m-%d %H:%M:%S"); ssh root@${remote_ip} "date -s \"${time_1}\""
+
+ssh root@${remote_ip} 'journalctl --no-tail -f' | tee log/vehicle.sys.txt
+
+print_green "pull vehicle bt snoop"
+scp root@${remote_ip}:/etc/bluetooth/btsnoop.log log/vehicle.btsnoop.txt
+scp root@${remote_ip}:/log.txt log/vehicle.nearby.txt

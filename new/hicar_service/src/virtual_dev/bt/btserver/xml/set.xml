@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node>
+<interface name="com.hsaeyz.bluetooth.set">
+        <property name="autoState" type="b" access="readwrite" />	
+        <property name="btversion" type="s" access="readwrite" />	  
+        <signal name="PowerStateChanged">
+		<arg name="powerState" type="b" />
+	</signal>
+	<signal name="autoStateChanged">
+		<arg name="state" type="b" />
+	</signal>
+        <signal name="versionStateChanged">
+		<arg name="verson" type="s" />
+	</signal>
+	<method name="setPower">
+		<arg name="power" type="b" direction="in" />
+	</method>
+	<method name="setbtPower">
+		<arg name="power" type="b" direction="in" />
+	</method>
+	<method name="setScanEnable">
+		<arg name="scan" type="b" direction="in" />
+	</method>
+	
+	<method name="setLocalDeviceName">
+		<arg name="name" type="s" direction="in" />
+	</method>
+        <method name="setAutoConnect">
+		<arg name="autoconnect" type="b" direction="in" />
+	</method>
+        <method name="enableAutoConnect">
+		<arg name="enableconnect" type="b" direction="in" />
+	</method>
+        <method name="setAutoAnswer">
+		<arg name="autoanswer" type="b" direction="in" />
+	</method>
+	<!-- add by qianzhong 2017-6-19 -->
+	<method name="setScanTime">
+        <arg name="time" type="i" direction="in" />
+        </method>
+
+        <method name="factoryreset">  
+        </method>
+
+
+</interface>
+</node>
+

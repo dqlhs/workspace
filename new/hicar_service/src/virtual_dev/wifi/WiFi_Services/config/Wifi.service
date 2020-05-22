@@ -1,0 +1,11 @@
+[Unit]
+Description=wifi
+[Service]
+EnvironmentFile=-/etc/wifi.conf
+ExecStart=/usr/bin/WifiService
+#StandardOutput=tty
+Restart=on-failure
+[Install]
+WantedBy=basic.target
+
+

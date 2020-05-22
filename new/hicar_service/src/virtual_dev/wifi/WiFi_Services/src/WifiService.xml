@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <interface name="com.hsaeyz.sal.WifiService">
+    <method name="setWifiEnabled">
+      <arg name="enabled" type="(b)" direction="in" />
+    </method>
+    <method name="startScan" />
+    <signal name="WIFI_SCAN_RESULTS_AVAILABLE" />
+    <method name="getScanResults">
+      <arg name="results" type="a(ssiiiasb)" direction="out" />
+    </method>
+    <method name="connect">
+      <arg name="config" type="(ss)" direction="in" />
+    </method>
+    <method name="updateHostApMac">
+      <arg name="config" type="(s)" direction="in" />
+    </method>
+    <method name="addsta">
+      <arg name="config" type="(s)" direction="in" />
+    </method>
+     <method name="deletesta">
+      <arg name="config" type="(s)" direction="in" />
+    </method>
+    <method name="startHostAp">
+      <arg name="config" type="(ss)" direction="in" />
+    </method>
+    <method name="stopHostAp">
+      <arg name="config" type="(ss)" direction="in" />
+    </method>
+    <method name="getHostApClientInfo">
+      <arg name="info" type="(ssiisiiiss)" direction="out" />
+    </method>
+    <method name="disconnect" />
+    <signal name="WIFI_STATE_CHANGED">
+      <arg name="currentState" type="i" direction="out" />
+      <arg name="previousState" type="i" direction="out" />
+    </signal>
+     <signal name="WIFI_STATE_CHANGED_HOST">
+      <arg name="currentState" type="i" direction="out" />
+      <arg name="previousState" type="i" direction="out" />
+    </signal>
+    <signal name="WIFI_STATE_CHANGED_HOATAP">
+      <arg name="currentState" type="(is)" direction="out" />
+      <arg name="previousState" type="i" direction="out" />
+    </signal>
+    <method name="setPeriodicScanInterval">
+      <arg name="interval" type="(i)" direction="in" />
+    </method>
+    <property name="PeriodicScanInterval" type="i" access="read" />
+    <method name="isWifiEnabled">
+      <arg name="enabled" type="b" direction="out" />
+    </method>
+    <method name="getConnectionInfo">
+      <arg name="info" type="(ssiisiiiss)" direction="out" />
+    </method>
+    <property name="State" type="i" access="read" />
+    <signal name="WIFI_SIGNAL_LEVEL_CHANGED">
+      <arg name="currentLevel" type="i" direction="out" />
+      <arg name="previousLevel" type="i" direction="out" />
+    </signal>
+    <method name="getSavedNetworks">
+      <arg name="networks" type="a(issibb)" direction="out" />
+    </method>
+    <method name="selectNetwork">
+      <arg name="netid" type="(i)" direction="in" />
+    </method>
+  </interface>
+</node>

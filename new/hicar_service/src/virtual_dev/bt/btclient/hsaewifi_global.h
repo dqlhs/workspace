@@ -1,0 +1,12 @@
+#ifndef HSAEWIFI_GLOBAL_H
+#define HSAEWIFI_GLOBAL_H
+
+//include <QtCore/qglobal.h>
+
+#if defined(HSAEWIFI_LIBRARY)
+#  define HSAEWIFISHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define HSAEWIFISHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // HSAEWIFI_GLOBAL_H

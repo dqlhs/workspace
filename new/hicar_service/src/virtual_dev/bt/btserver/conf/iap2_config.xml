@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Accessory>
+        <Name>Display Audio</Name>
+        <ModelIdentifier>HS-N1133</ModelIdentifier>
+        <Manufacturer>Hsae;Inc.</Manufacturer>
+        <SerialNumber>ABC-0123456789</SerialNumber>
+        <FirmwareVersion>v1.0.0</FirmwareVersion>
+        <HardwareVersion>v1.0.0</HardwareVersion>
+        <Messages>
+                <AppLaunch>true</AppLaunch>
+                <AssistiveTouch>false</AssistiveTouch>
+                <BluetoothConnection>false</BluetoothConnection>
+                <DeviceAuthentication>false</DeviceAuthentication>
+                <DeviceNotifications>false</DeviceNotifications>
+                <ExternalAccessoryProtocol>true</ExternalAccessoryProtocol>
+                <HumanInterfaceDevice>false</HumanInterfaceDevice>
+                <Location>false</Location>
+                <MediaLibraryAccess>false</MediaLibraryAccess>
+                <NowPlaying>false</NowPlaying>
+                <Power>false</Power>
+                <USBDeviceModeAudio>false</USBDeviceModeAudio>
+                <Telephony>false</Telephony>
+                <VehicleStatus>false</VehicleStatus>
+                <VoiceOver>false</VoiceOver>
+                <WiFiInformationSharing>false</WiFiInformationSharing>
+        </Messages>
+        <PowerProvidingCapability>0</PowerProvidingCapability>
+        <MaximumCurrentDrawnFromDevice>0</MaximumCurrentDrawnFromDevice>
+        <SupportedExternalAccessoryProtocol>
+                <item>
+                        <ExternalAccessoryProtocolIdentifier>1</ExternalAccessoryProtocolIdentifier>
+                        <ExternalAccessoryProtocolName>com.hsae.VehicleFunhsae</ExternalAccessoryProtocolName>
+                        <ExternalAccessoryProtocolMatchAction>1</ExternalAccessoryProtocolMatchAction>
+                </item>
+        </SupportedExternalAccessoryProtocol>
+        <AppMatchTeamID>com.hsae.dalink.da</AppMatchTeamID>
+        <CurrentLanguage>en</CurrentLanguage>
+        <SupportedLanguage>en</SupportedLanguage>
+        <BluetoothTransportComponent>
+                <item>
+                        <TransportComponentIdentifier>2</TransportComponentIdentifier>
+                        <TransportComponentName>HSAE-Bluetooth</TransportComponentName>
+                        <TransportSupportsiAP2Connection>true</TransportSupportsiAP2Connection>
+                        <BluetoothTransportMediaAccessControlAddress>68 DB CA 0F 8C 39</BluetoothTransportMediaAccessControlAddress>
+                </item>
+        </BluetoothTransportComponent>
+</Accessory>
